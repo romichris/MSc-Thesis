@@ -1,0 +1,2 @@
+coreLang_version=v1.0.0rc5
+coreLang_commit=4f5bbb40be24a25d928bfc2594efddb785a02e5f

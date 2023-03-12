@@ -1,0 +1,4 @@
+coreLang_version=v0.5.1
+coreLang_tag=DAC_v0.5.1rc2
+coreLang_branch=directory_access_control
+coreLang_commit=ffcc4a777f6abacef4be8f58f4b1128a13760fed
