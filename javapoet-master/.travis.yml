@@ -1,0 +1,23 @@
+language: java
+dist: bionic
+
+matrix:
+  include:
+    - jdk: openjdk11
+
+before_install:
+  - unset _JAVA_OPTIONS
+
+after_success:
+  - .buildscript/deploy_snapshot.sh
+
+branches:
+  except:
+    - gh-pages
+
+notifications:
+  email: false
+
+cache:
+  directories:
+    - $HOME/.m2

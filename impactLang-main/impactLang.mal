@@ -1,0 +1,57 @@
+/*
+ * Copyright 2020-2021 impactLang contributors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+category main {
+asset SystemImpact extends System
+developer info: "This is the system asset from coreLang. I have only written down what needs to be added to coreLang to realize the impactLang. Depending on the use case, a better design is however probably to write this extension code in the system asset rather than extending like this. A similar extension could be done for other assets. I think most possibly Data and/or Information." 
+{
+| fullAccess
+ +> leadsTo[ORimpact].oRrealized, 
+ 	leadsTo[ANDimpact].aNDrealized
+}
+asset SignalImpact extends Signal
+developer info: "This is the system asset from icsLang. I have only written down what needs to be added to icsLang to realize the impactLang. Depending on the use case, a better design is however probably to write this extension code in the signal asset rather than extending like this. A similar extension could be done for other assets. I think most possibly Data and/or Information."
+{
+	| manipulateSignal
+ 		+> leadsTo[ORimpact].oRrealized, 
+ 		leadsTo[ANDimpact].aNDrealized
+	| blockSignal
+ 		+> leadsTo[ORimpact].oRrealized, 
+ 		leadsTo[ANDimpact].aNDrealized
+}
+abstract asset Impact 
+ user info: "the consequence value, preferably the Monetary one could be used to set the Impact Loss Value"  
+{
+}
+asset ORimpact extends Impact {
+| oRrealized
+ -> parent[ORimpact].oRrealized, 
+ 	parent[ANDimpact].aNDrealized
+}
+asset ANDimpact extends Impact{
+& aNDrealized
+ -> parent[ORimpact].oRrealized, 
+ 	parent[ANDimpact].aNDrealized
+}
+
+}
+
+associations {
+	Impact [parent] * <--aggregation--> * [child] Impact
+ 	developer info: "Impacts can be arbitrarily aggregated and combined, similar to fault trees"
+	SystemImpact [sysCause] * <--consequence--> * [leadsTo] Impact
+	SignalImpact [sigCause] * <--consequence--> * [leadsTo] Impact
+}
